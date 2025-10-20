@@ -1,0 +1,92 @@
+🚀 Starting Automated Deployment Script...
+Enter GitHub repository URL: Enter your Personal Access Token (PAT): Enter branch name (default: main): Enter SSH username for remote server: Enter Server IP address: Enter path to your SSH private key (e.g., ~/.ssh/id_rsa): Enter application port (internal container port): 
+✅ Parameters collected successfully!
+Repository: https://github.com/cwebhunter01/hng-devops-stage1-automation.git
+Branch: main
+Server: ubuntu@54.219.162.73
+Port: 8080
+
+📦 Cloning repository or pulling latest changes...
+Repository already exists. Pulling latest changes...
+From https://github.com/cwebhunter01/hng-devops-stage1-automation
+ * branch            main       -> FETCH_HEAD
+Already up to date.
+✅ Repository cloned and Dockerfile verified.
+🔹 Connecting to EC2 instance and preparing environment...
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+Welcome to Ubuntu 24.04.3 LTS (GNU/Linux 6.14.0-1011-aws x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Mon Oct 20 22:52:47 UTC 2025
+
+  System load:  0.0               Processes:             119
+  Usage of /:   37.9% of 6.71GB   Users logged in:       0
+  Memory usage: 33%               IPv4 address for enX0: 172.31.13.66
+  Swap usage:   0%
+
+ * Ubuntu Pro delivers the most comprehensive open source security and
+   compliance features.
+
+   https://ubuntu.com/aws/pro
+
+Expanded Security Maintenance for Applications is not enabled.
+
+1 update can be applied immediately.
+To see these additional updates run: apt list --upgradable
+
+1 additional security update can be applied with ESM Apps.
+Learn more about enabling ESM Apps service at https://ubuntu.com/esm
+
+
+*** System restart required ***
+🛠️ Updating server and installing dependencies...
+
+WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+
+Hit:1 http://us-west-1.ec2.archive.ubuntu.com/ubuntu noble InRelease
+Hit:2 http://us-west-1.ec2.archive.ubuntu.com/ubuntu noble-updates InRelease
+Hit:3 http://us-west-1.ec2.archive.ubuntu.com/ubuntu noble-backports InRelease
+Hit:4 http://security.ubuntu.com/ubuntu noble-security InRelease
+Reading package lists...
+Building dependency tree...
+Reading state information...
+2 packages can be upgraded. Run 'apt list --upgradable' to see them.
+
+WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+
+Reading package lists...
+Building dependency tree...
+Reading state information...
+docker.io is already the newest version (28.2.2-0ubuntu1~24.04.1).
+nginx is already the newest version (1.24.0-2ubuntu7.5).
+git is already the newest version (1:2.43.0-1ubuntu7.3).
+0 upgraded, 0 newly installed, 0 to remove and 2 not upgraded.
+Synchronizing state of nginx.service with SysV service script with /usr/lib/systemd/systemd-sysv-install.
+Executing: /usr/lib/systemd/systemd-sysv-install enable nginx
+📁 Setting up application directory...
+📥 Cloning latest code from GitHub...
+Cloning into '.'...
+🧹 Cleaning up old Docker container if it exists...
+hng-app
+hng-app
+🐳 Building new Docker image...
+DEPRECATED: The legacy builder is deprecated and will be removed in a future release.
+            Install the buildx component to build images with BuildKit:
+            https://docs.docker.com/go/buildx/
+
+Sending build context to Docker daemon  72.19kB
+Step 1/2 : FROM nginx:alpine
+ ---> 5e7abcdd2021
+Step 2/2 : COPY index.html /usr/share/nginx/html/index.html
+ ---> Using cache
+ ---> c2a6f544ea17
+Successfully built c2a6f544ea17
+Successfully tagged hng-app:latest
+🚀 Running new Docker container...
+e59c64521c65567d514dc54bf0f8f10dfca6da001580b5e16691044af1a46615
+docker: Error response from daemon: failed to set up container networking: driver failed programming external connectivity on endpoint hng-app (5426f84cd69464310faa620cc09cdfa9ac43b13645584c5dc82b233640923de3): Bind for 0.0.0.0:8080 failed: port is already allocated
+
+Run 'docker run --help' for more information
