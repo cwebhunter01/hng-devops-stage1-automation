@@ -1,71 +1,81 @@
-# 🚀 HNG DevOps Stage 1 – Automated Deployment
+# HNG DevOps Stage 1 – Deployment Automation
 
-## 📝 Project Description
-This project automates the deployment of a simple static website using **Bash, Docker, and Nginx**.  
-It pulls the latest code from GitHub, builds a Docker image, runs the container, and configures Nginx automatically on a remote Ubuntu server.
-
-The goal of this project is to demonstrate the ability to automate deployments — from code retrieval to live server setup — using a single script.
+## Description
+This project automates the deployment of a static website (`index.html`) using **Bash, Docker, and Nginx**.  
+The `deploy.sh` script handles **full deployment on a remote Ubuntu server**, including environment setup, Docker containerization, Nginx reverse proxy configuration, and live verification.
 
 ---
 
-## 📂 Project Files
-| File | Description |
-|------|--------------|
-| `index.html` | The static web page served via Nginx. |
-| `Dockerfile` | Defines the Docker image for the web app. |
-| `deploy.sh` | Bash automation script for deployment. |
-| `README.md` | Documentation for setup and execution. |
+## Project Files
+- `index.html` — Static web page to be served.  
+- `Dockerfile` — Builds the Docker image for the application.  
+- `deploy.sh` — Fully automated deployment script.  
+- `README.md` — Project documentation.  
 
 ---
 
-## ⚙️ Technologies Used
-- **Ubuntu 24.04 LTS**
-- **Docker**
-- **Nginx**
-- **Git**
-- **Bash Script**
+## Technologies Used
+- Ubuntu 24.04 LTS  
+- Docker  
+- Nginx  
+- Git  
+- Bash  
 
 ---
 
-## 🧠 How It Works
-The `deploy.sh` script performs the following steps automatically:
+## Features of the Deployment Script
+The `deploy.sh` script performs the following tasks:
 
-1. Collects deployment parameters such as GitHub repo URL, SSH key, and server details.  
-2. Clones or pulls the latest code from GitHub.  
-3. Connects to the remote server using SSH.  
-4. Installs required dependencies: **Docker**, **Nginx**, and **Git**.  
-5. Builds and runs the Docker container from the `Dockerfile`.  
-6. Configures **Nginx** as a reverse proxy to route HTTP requests to the container.  
-7. Restarts Nginx and finalizes the deployment process.
+1. Collects all deployment parameters from the user:
+   - GitHub repository URL
+   - Personal Access Token (PAT)
+   - Branch name
+   - SSH credentials for remote server
+   - Application internal port
+2. Validates user input to ensure all required fields are filled.
+3. Cleans up **old local logs** (keeps the last 5 deployment logs).  
+4. Removes **old local repository folder** to avoid duplication.  
+5. Clones the latest repository or pulls updates if it already exists.  
+6. Checks for the presence of a Dockerfile or docker-compose.yml.  
+7. SSHs into the remote server and prepares the environment:
+   - Updates system packages
+   - Installs Docker, Nginx, Git, and curl
+   - Enables and starts Docker service
+8. Stops and removes **any existing container** with the same name.  
+9. Removes **old Docker images** to prevent conflicts.  
+10. Cleans up **old Docker volumes** related to the app.  
+11. Prepares the remote app directory for deployment.  
+12. Clones the latest repository to the remote server.  
+13. Builds a Docker image for the application.  
+14. Runs the Docker container on the specified internal port.  
+15. Configures Nginx as a reverse proxy to forward HTTP traffic to the Docker container.  
+16. Reloads Nginx and tests its configuration.  
+17. Verifies the live deployment using an HTTP request.  
+18. Saves the full deployment process to a **timestamped log file**.
 
 ---
 
-## 🧩 Setup Instructions
+## How to Run the Script
 
 ### 1. Clone the Repository
 ```bash
 git clone https://github.com/cwebhunter01/hng-devops-stage1-automation.git
 cd hng-devops-stage1-automation
-### Script Executable 
+
+### Make the Script Executable
 chmod +x deploy.sh
-### Run The Script 
+
+### Run the Script
 ./deploy.sh
 
-You’ll be prompted to enter:
-GitHub repository URL
-Personal Access Token (PAT)
-Branch name (default: main)
-SSH username and IP address of your server
-Path to your SSH private key
-Application internal port
-The script will automatically handle cloning, building, and deploying your web app.
+The script will prompt you for the required inputs, perform all deployment steps, and log the output.
 
+### LIVE URL.
+After deployment, access the application at:
 
-### Live URL
+http://54.219.162.73
 
-Access the deployed web application at:
-👉 http://54.219.162.73
-###Author
+### AUTHOR
 Adeyemi Favour
-HNG DevOps Intern — Stage 1 Challenge
-GitHub: cwebhunter01
+HNG DevOps Intern – Stage 1 Challenge
+GitHub: https://github.com/cwebhunter01
